@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+    <head land="en">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900">
+        <title>My CV</title>
+
+        <style>
+            body { 
+                padding-top: 100px; 
+                background-color: #ffead9;
+            }
+            .github{
+                display: inline-block;
+            }
+            .fa {
+                padding: 20px;
+                font-size: 50px;
+            }
+            .fa:hover {
+                opacity: 0.5;
+            }
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div class="container">
+                <nav class="navbar fixed-top navbar-expand-sm navbar-light bg-dark">
+                    <a class="navbar-brand mb-0 text-light h1" href="#">Jesus Martinez</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link text-light" href="#" @click.prevent="hideAll">Home<span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="#aboutMe" @click.prevent="viewAboutMe">About Me</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="#myProjects" @click.prevent="viewProjects">My projects</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="#timeline" @click.prevent="viewTimeline">Professional timeline</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="#contact" @click.prevent="viewContact">Contact me</a>
+                        </li>
+                        </ul>
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-2" type="search" v-model="searchBar" aria-label="Search">
+                            <button class="btn btn-danger my-2 my-sm-0" type="submit" @click.prevent="viewMsg">Don't!</button>
+                        </form>
+                    </div>
+                </nav>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <aside class="col-md-5">
+                        <h1 class="mb-1">
+                            <a href="#">Jesus Martinez</a>
+                        </h1>
+                        <h3 class="mb-5 font-weight-light">
+                            Computer Technologies Engineering student with specializations in:<br>
+                            <ul>
+                                <li>Intelligent Systems</li>
+                                <li>Data Science</li>
+                            </ul>
+                        </h3>
+                        <h4 class="mb-3 font-weight-normal">My skills</h4>
+                        <p
+                            v-for="skill in skills()"
+                            v-html="skill.name + ' ' + skill.level"
+                        ></p>
+                    </aside>
+                    <main class="col-md-5">
+                        <p>
+                            <a href="./me.jpg">
+                                <img src="./me.jpg" alt="Jesus Martinez" class="rounded-circle" style="width: 25%">
+                            </a>
+                        </p>
+                        <p v-if="showAboutMe" v-cloak id="aboutMe" style="font-family: Roboto; font-size: large;">
+                            A wild bio appeared!
+                        </p>
+                        <p v-if="showProjects" v-cloak id="myProjects" style="font-family: Roboto; font-size: large;">
+                            My projects:
+                        </p>
+                        <ul v-if="showProjects" v-cloak id="myProjects">
+                            <li>
+                                Project 1
+                            </li>
+                            <li>
+                                Project 2
+                            </li>
+                            <li>
+                                Project 3
+                            </li>
+                        </ul>
+                        <p v-if="showTimeline" v-cloak id="timeline" style="font-family: Roboto; font-size: large;">
+                            | Start ---------- Finish |
+                        </p>
+                        <div v-if="showContact" v-cloak id="contact">
+                            <p v-if="showContact" v-cloak id="contact" style="font-family: Roboto; font-size: large;">
+                                Call me!
+                            </p>
+                            <h4 v-if="showContact" v-cloak id="contact" class="mb-0 font-weight-normal">
+                                <a href="mailto:jcmartgon@gmail.com">jcmartgon@gmail.com</a>
+                            </h4>
+                            <p class="github">Github: </p>
+                            <p class="mb-0 github">
+                                <a class="text-dark" href="https://github.com/jcmartgon"><i class="fa fa-github" aria-hidden="true"></i></a>
+                            </p>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    searchBar: "Work in progress...",
+                    showAboutMe: false,
+                    showProjects: false,
+                    showTimeline: false,
+                    showContact: false,
+                    skill: ""
+                },
+                methods: {
+                    viewAboutMe: function() {
+                        this.showAboutMe = true
+                        this.showProjects = false
+                        this.showTimeline = false
+                        this.showContact = false
+                    },
+                    viewProjects: function() {
+                        this.showAboutMe = false
+                        this.showProjects = true
+                        this.showTimeline = false
+                        this.showContact = false
+                    },
+                    viewTimeline: function() {
+                        this.showAboutMe = false
+                        this.showProjects = false
+                        this.showTimeline = true
+                        this.showContact = false
+                    },
+                    viewMsg: function() {
+                        this.showAboutMe = false
+                        this.showProjects = false
+                        this.showTimeline = false
+                        this.showContact = false
+                    },
+                    viewContact: function() {
+                        this.showAboutMe = false
+                        this.showProjects = false
+                        this.showTimeline = false
+                        this.showContact = true
+                    },
+                    hideAll: function() {
+                        this.showAboutMe = false
+                        this.showProjects = false
+                        this.showTimeline = false
+                        this.showContact = false
+                    },
+                    skills: function () {
+                        return [
+                            { name: "C++" , level: "****"},
+                            { name: "Python" , level: "*****"},
+                            { name: "SQL" , level: "****"},
+                            { name: "Algorithms", level: "*****" },
+                            { name: "HTML", level: "**" },
+                            { name: "CSS", level: "**" },
+                            { name: "Javascript", level: "**" }
+                        ]
+                    }
+                }
+            })
+        </script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    </body>
+</html>
